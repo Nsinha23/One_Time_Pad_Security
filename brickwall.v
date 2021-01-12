@@ -1,0 +1,46 @@
+
+module brickwall(input [31:0]Input_text,key, input request, output reg [31:0] Output_text);
+reg [15:0] transposition, modulation;
+integer i;
+
+always @(*)
+begin
+if (key[31:27]<key[10:6]) begin
+transposition={3'b1,key[20:10],2'b01};
+//$display(" 1 Transposition %0b",transposition);
+end
+else if (key[21:17]>key[30:26]) begin
+transposition={3'b1,key[26:14],1'b10};
+//$display(" 2 Transposition 0x%0b",transposition);
+end
+else if (key[19:11]<key[29:21]) begin
+transposition={3'b1,key[13:2],2'b01}; //=========
+//$display(" 3 Transposition 0x%0b",transposition);
+end
+else if (key[23:1]>key[28:6])begin
+transposition={3'b1,key[25:15],3'b011};
+//$display(" 4 Transposition 0x%0b",transposition);
+end
+
+if (request==1'b0) begin
+// =================== ENCRYPTOR ====================
+//Output_text=Output_text-transposition;
+Output_text=Input_text^key;
+// ******* HASHING *******
+
+// ================ END OF ENCRYPTOR ================
+end
+
+else begin
+// =================== DECRYPTOR ===================
+Output_text=Input_text^key;
+//Output_text=Output_text+transposition;
+// ******* HASHING *******
+
+// =============== END OF DECRYPTOR ================
+end
+
+end
+
+
+endmodule

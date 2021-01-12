@@ -1,0 +1,16 @@
+module F_tests();
+
+initial begin
+$display("245 / 3: %d",245/3);
+$display("3 pcnt 4: %d",3%4);
+$display("16 pcnt 4: %d",16%4);
+$display("245093 / 5: %d",245093/5);
+$display("2/5: %d",2/5);
+
+
+
+#10 $stop;
+
+end
+
+endmodule
